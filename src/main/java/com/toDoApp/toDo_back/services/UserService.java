@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.toDoApp.toDo_back.dto.request.UserRequestDTO;
 import com.toDoApp.toDo_back.dto.response.UserResponseDTO;
+import com.toDoApp.toDo_back.entity.UserEntity;
 import com.toDoApp.toDo_back.repository.UserRepository;
 
 @Service
@@ -28,6 +30,22 @@ public class UserService {
             )
             .toList();
             
+    }
+
+    //registar un usuario
+    public UserResponseDTO registerUser(UserRequestDTO userRequest){
+
+        UserEntity userEntity = UserEntity.builder()
+            .email(userRequest.getEmail())
+            .name(userRequest.getName())
+            .password(userRequest.getPassword())
+            .build();
+
+        UserEntity userRegister = userRepository.save(userEntity);
+
+        return UserResponseDTO.
+
+
     }
 
 }
