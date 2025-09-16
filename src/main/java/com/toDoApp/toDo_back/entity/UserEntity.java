@@ -3,6 +3,10 @@ package com.toDoApp.toDo_back.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.CurrentTimestamp;
+import org.hibernate.annotations.TimeZoneColumn;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,6 +46,7 @@ public class UserEntity {
     @Column(name="created_at",updatable=false)
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name="update_at",updatable=true)
     private LocalDateTime updadeAt;
 

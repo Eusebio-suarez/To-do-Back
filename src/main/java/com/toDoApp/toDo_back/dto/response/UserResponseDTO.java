@@ -1,5 +1,8 @@
 package com.toDoApp.toDo_back.dto.response;
 
+import java.time.LocalDateTime;
+
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +20,6 @@ public class UserResponseDTO {
     private String email;
 
     @NotBlank
-    private LocalData createdAt;
+    private LocalDateTime createdAt;
 
 }
