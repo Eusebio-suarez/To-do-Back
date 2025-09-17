@@ -7,13 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.toDoApp.toDo_back.dto.request.TaskRequestDTO;
-import com.toDoApp.toDo_back.dto.response.TaskResponseDTO;
+import com.toDoApp.toDo_back.dto.response.TaskCretedResponseDTO;
+import com.toDoApp.toDo_back.dto.response.TaskUpdatedResponseDTO;
 import com.toDoApp.toDo_back.services.TaskService;
 import com.toDoApp.toDo_back.utils.ApiResponse;
 
@@ -28,7 +30,7 @@ public class TaskController {
     @GetMapping("")
     public ResponseEntity<ApiResponse<?>> getTasks(@RequestParam Long id){
         try{
-            List<TaskResponseDTO> tasks = taskService.getTasks(id);
+            List<TaskCretedResponseDTO> tasks = taskService.getTasks(id);
 
             if(tasks!=null){
                 return ResponseEntity.status(HttpStatus.OK)
@@ -60,7 +62,7 @@ public class TaskController {
 
         try{
             //crear la tarea con el servicio
-            TaskResponseDTO taskCreated = taskService.createTask(id, taskRequest);
+            TaskCretedResponseDTO taskCreated = taskService.createTask(id, taskRequest);
 
             if(taskCreated != null){
                 return ResponseEntity.status(HttpStatus.CREATED)
@@ -86,4 +88,39 @@ public class TaskController {
                 );
         }
     }
+
+    //endpoind para actualizar una tarea
+    @PutMapping("/update")
+    public ResponseEntity<ApiResponse<?>> updateTask(@RequestParam Long id,@RequestBody TaskRequestDTO taskRequestDTO){
+
+        try{
+            //actualizar la tarea con el servicio
+            TaskUpdatedResponseDTO task =taskService.updateTask(id, taskRequestDTO);
+
+            if(task!=null){
+                return(ResponseEntity.status(HttpStatus.ACCEPTED)
+                    .body(ApiResponse.builder()
+                        .success(true)
+                        .message("se actualizo correctamente")
+                        .data(task)
+                        .build()
+                    ));
+            }
+            else{
+                throw new Exception("no se pudo actualizar la tarea");
+            }
+
+        }
+        catch(Exception e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ApiResponse.builder()
+                    .success(false)
+                    .message("Error :"+e.getMessage())
+                    .data(null)
+                    .build()
+                );
+        }
+
+    }
+
 }
