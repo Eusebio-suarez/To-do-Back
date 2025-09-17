@@ -3,8 +3,6 @@ package com.toDoApp.toDo_back.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.hibernate.annotations.CurrentTimestamp;
-import org.hibernate.annotations.TimeZoneColumn;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
@@ -17,14 +15,18 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
 @Builder
 @Entity
 @Table(name="users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
     
     @Id
@@ -32,7 +34,7 @@ public class UserEntity {
     private Long id;
 
     @NotBlank
-    @Size(min=3)
+    @Size(min=3,message="el nombre debe tener minimo 3 caracteres")
     private String name;
 
     @Email
@@ -40,7 +42,7 @@ public class UserEntity {
     @Column(unique=true)
     private String email;
 
-    @Size(min=8)
+    @Size(min=8,message="la contraseña debe tener inimo 8 caracteres")
     private String password;
 
     @Column(name="created_at",updatable=false)

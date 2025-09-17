@@ -1,5 +1,6 @@
 package com.toDoApp.toDo_back.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class UserService {
     //obtener todos los usuarios
     public List<UserResponseDTO> getUsers(){
         
-        return (List<UserResponseDTO>) userRepository.findAll()
+        return userRepository.findAll()
             .stream()
             .map(user -> UserResponseDTO.builder()
                 .id(user.getId())
@@ -39,13 +40,17 @@ public class UserService {
             .email(userRequest.getEmail())
             .name(userRequest.getName())
             .password(userRequest.getPassword())
+            .createdAt(LocalDateTime.now())
             .build();
 
         UserEntity userRegister = userRepository.save(userEntity);
 
-        return UserResponseDTO.
-
-
+        return UserResponseDTO.builder()
+            .id(userRegister.getId())
+            .name(userRegister.getName())
+            .email(userRegister.getEmail())
+            .createdAt(userRegister.getCreatedAt())
+            .build();
     }
 
 }
