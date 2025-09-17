@@ -1,20 +1,19 @@
-package com.toDoApp.toDo_back.dto.request;
+package com.toDoApp.toDo_back.dto.response;
+
+import java.time.LocalDateTime;
 
 import com.toDoApp.toDo_back.utils.StatusEnum;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Data;
 
+
 @Data
 @Builder
-public class TaskRequestDTO {
-    @NotBlank
+public class TaskUpdatedResponseDTO {
+    private Long id;
     private String title;
-
-    @NotBlank
     private String description;
-    
-    @NotBlank
     private StatusEnum status;
+    private LocalDateTime updatedAt;
 }

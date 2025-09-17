@@ -1,7 +1,12 @@
 package com.toDoApp.toDo_back.entity;
 
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.toDoApp.toDo_back.utils.StatusEnum;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -36,6 +41,13 @@ public class TaskEntity {
 
     @NotNull
     private StatusEnum status;
+
+    @Column(name="created_at",updatable=false)
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    @Column(name="update_at",updatable=true)
+    private LocalDateTime updadeAt;
 
     @ManyToOne
     @JoinColumn(name="user_id",nullable=false)
