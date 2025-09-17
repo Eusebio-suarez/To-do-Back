@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class TaskResponseDTO {
+    private Long id;
     private String title;
-    private String description;
     private StatusEnum status;
 }
