@@ -1,4 +1,4 @@
-package com.toDoApp.toDo_back.controllers;
+package com.toDoApp.toDo_back.controllers.userControllers;
 
 import java.util.List;
 
