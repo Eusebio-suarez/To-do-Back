@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.toDoApp.toDo_back.dto.request.TaskRequestDTO;
 import com.toDoApp.toDo_back.dto.response.TaskCretedResponseDTO;
+import com.toDoApp.toDo_back.dto.response.TaskDeletedResponseDTO;
 import com.toDoApp.toDo_back.dto.response.TaskUpdatedResponseDTO;
 import com.toDoApp.toDo_back.entity.TaskEntity;
 import com.toDoApp.toDo_back.entity.UserEntity;
@@ -90,6 +91,21 @@ public class TaskService {
             .description(taskUpdated.getDescription())
             .status(taskUpdated.getStatus())
             .updatedAt(taskUpdated.getUpdadeAt())
+            .build();
+    }
+
+    //eliminar una tarea
+    public TaskDeletedResponseDTO deleteTask(Long id) throws Exception{
+
+        //buscar la tarea a eliminar
+        TaskEntity task = taskRepository.findById(id)
+            .orElseThrow(()-> new Exception("no se encontro la tarea"));
+
+        taskRepository.deleteById(task.getId());
+
+        return TaskDeletedResponseDTO.builder()
+            .id(task.getId())
+            .title(task.getTitle())
             .build();
     }
 
