@@ -30,7 +30,7 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    //generar el token con jwt
+    //generar el token con jwt cuando el usuario se autentica
     public String generateToken(String userName){
 
         return Jwts.builder()

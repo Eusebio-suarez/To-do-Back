@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.toDoApp.toDo_back.dto.request.UserRequestDTO;
@@ -16,6 +17,9 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     //obtener todos los usuarios
     public List<UserResponseDTO> getUsers(){
@@ -39,7 +43,7 @@ public class UserService {
         UserEntity userEntity = UserEntity.builder()
             .email(userRequest.getEmail())
             .name(userRequest.getName())
-            .password(userRequest.getPassword())
+            .password(encoder.encode(userRequest.getPassword()))
             .createdAt(LocalDateTime.now())
             .build();
 
