@@ -7,6 +7,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -29,6 +30,7 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
+    //generar el token con jwt
     public String generateToken(String userName){
 
         return Jwts.builder()
@@ -38,6 +40,32 @@ public class JwtUtils {
                     +Long.parseLong(expiration)))
                 .signWith(getSignature())//firmar con la clave secreta
                 .compact();//copactar todo par devolver el string
+    }
 
+    //obtener el username del token
+    public String getUsername(String token){
+        
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignature())
+                .build()
+                .parseClaimsJws(token)//parsear y validar firma
+                .getBody()//obtener el conido del token
+                .getSubject();//obtener el subject
+    }
+
+    //validar el token
+    public boolean validateToken(String token){
+        try{
+            Jwts.parserBuilder()
+                .setSigningKey(getSignature())
+                .build()
+                .parseClaimsJws(token);//parsear y validar la firma, lanza excepcion si no es valido
+            
+            return true; 
+        }
+        catch(JwtException | IllegalArgumentException e){
+            //token valido o expirado
+            return false;
+        }
     }
 }
