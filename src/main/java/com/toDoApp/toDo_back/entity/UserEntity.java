@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.toDoApp.toDo_back.utils.RoleEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,6 +47,8 @@ public class UserEntity {
     @Size(min=8,message="la contraseña debe tener inimo 8 caracteres")
     private String password;
 
+    private RoleEnum rol;
+    
     @Column(name="created_at",updatable=false)
     private LocalDateTime createdAt;
 
