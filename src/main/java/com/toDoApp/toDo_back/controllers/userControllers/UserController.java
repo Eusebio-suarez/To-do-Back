@@ -56,34 +56,4 @@ public class UserController {
                 );
         }
     }
-
-    @PostMapping("")
-    //endpoint para registrar un usuario
-    public ResponseEntity<ApiResponse<?>>registerUser(@Valid @RequestBody UserRequestDTO userRequest){
-        try{
-            UserResponseDTO user = userService.registerUser(userRequest);
-        
-            if(user != null){
-                return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(ApiResponse.builder()
-                        .success(true)
-                        .message("usuario creado correctamente")
-                        .data(user)
-                        .build()
-                    );
-            }
-            else{
-                throw new Exception("no se pudo crear el usuario");
-            }
-        }
-        catch(Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.builder()
-                    .success(false)
-                    .message("error al crear el usuario :" +e.getMessage())
-                    .data(null)
-                    .build()
-                );
-        }
-    }
 }

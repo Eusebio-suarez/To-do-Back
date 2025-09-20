@@ -20,7 +20,7 @@ public class SecurityConfig {
             //configurar los endpoints 
             .authorizeHttpRequests(auth -> auth
                 //rutas permitidas
-                .requestMatchers("/api/v1/**").permitAll()
+                .requestMatchers("/api/v1/auth/**").permitAll()
                 .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults())

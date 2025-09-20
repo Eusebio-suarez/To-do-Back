@@ -15,4 +15,4 @@ spring:
 
     jwt:
         secretKey: 56YNTKPqsn7nXIAb5qnfgSuYVK2gDQ2b
-        expiration:
+        expiration: 3600000

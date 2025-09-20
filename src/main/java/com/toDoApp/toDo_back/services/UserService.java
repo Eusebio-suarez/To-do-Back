@@ -2,11 +2,13 @@ package com.toDoApp.toDo_back.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.toDoApp.toDo_back.dto.request.LoginRequestDTO;
 import com.toDoApp.toDo_back.dto.request.UserRequestDTO;
 import com.toDoApp.toDo_back.dto.response.UserResponseDTO;
 import com.toDoApp.toDo_back.entity.UserEntity;
@@ -55,6 +57,26 @@ public class UserService {
             .email(userRegister.getEmail())
             .createdAt(userRegister.getCreatedAt())
             .build();
+    }
+
+    //autenticar un usuario
+    public Optional<UserEntity> authenticate(LoginRequestDTO loginRequest){
+        //bucar el usuario con el repository
+        Optional<UserEntity> userSearched = userRepository.findByEmail(loginRequest.getEmail());
+
+        //validar que se encontro el usuario
+        if(userSearched.isPresent()){
+            //obtener el valor del opcional(userEntity)
+            UserEntity user = userSearched.get();
+
+            //comparar las contraseñas con el password encoder
+            if(encoder.matches(loginRequest.getPassword(),user.getPassword())){
+                //de devuelve la entidad ya que la contraseña es correcta
+                return Optional.of(user);
+            }
+        }
+
+        return Optional.empty();//la contraseña o el usuario son incorrectos
     }
 
 }
