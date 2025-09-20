@@ -3,6 +3,7 @@ package com.toDoApp.toDo_back.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -15,7 +16,8 @@ import com.toDoApp.toDo_back.security.filters.JwtAuthorizationFilter;
 
 
 @Configuration
-@EnableWebSecurity // se le indica a spring que esta clase contiene las reglas y la configuracion de seguridad
+@EnableWebSecurity// se le indica a spring que esta clase contiene las reglas y la configuracion de seguridad
+@EnableMethodSecurity(prePostEnabled=true)//habilita la seguridad a nivel de metodos (post y pre autenticación/filtro)
 public class SecurityConfig {
 
     @Bean
