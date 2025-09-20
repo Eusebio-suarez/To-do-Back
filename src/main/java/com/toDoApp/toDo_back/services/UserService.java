@@ -13,6 +13,7 @@ import com.toDoApp.toDo_back.dto.request.UserRequestDTO;
 import com.toDoApp.toDo_back.dto.response.UserResponseDTO;
 import com.toDoApp.toDo_back.entity.UserEntity;
 import com.toDoApp.toDo_back.repository.UserRepository;
+import com.toDoApp.toDo_back.utils.RoleEnum;
 
 @Service
 public class UserService {
@@ -46,6 +47,7 @@ public class UserService {
             .email(userRequest.getEmail())
             .name(userRequest.getName())
             .password(encoder.encode(userRequest.getPassword()))
+            .rol(RoleEnum.USER)
             .createdAt(LocalDateTime.now())
             .build();
 

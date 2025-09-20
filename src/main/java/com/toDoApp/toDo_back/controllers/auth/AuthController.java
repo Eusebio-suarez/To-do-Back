@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.toDoApp.toDo_back.dto.request.LoginRequestDTO;
 import com.toDoApp.toDo_back.dto.request.UserRequestDTO;
+import com.toDoApp.toDo_back.dto.response.LoginResponseDTO;
 import com.toDoApp.toDo_back.dto.response.UserResponseDTO;
 import com.toDoApp.toDo_back.entity.UserEntity;
 import com.toDoApp.toDo_back.security.JwtUtils;
@@ -71,11 +72,14 @@ public class AuthController {
                 String token =jwtUtils.generateToken(user.getEmail());
 
                 //devolver la respuesta con el token
-                return ResponseEntity.status(HttpStatus.ACCEPTED)
+                return ResponseEntity.status(HttpStatus.OK)
                     .body(ApiResponse.builder()
                         .success(true)
                         .message("login exitoso")
-                        .data(token)
+                        .data(LoginResponseDTO.builder()
+                            .token(token)
+                            .build()
+                        )
                         .build()
                     );
             }
@@ -84,7 +88,7 @@ public class AuthController {
             }    
         } 
         catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ApiResponse.builder()
                     .success(false)
                     .message("error de sesión :"+e.getMessage())
