@@ -1,6 +1,8 @@
 package com.toDoApp.toDo_back.controllers.tasksControllers;
 
+import java.net.http.HttpRequest;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,8 +20,12 @@ import com.toDoApp.toDo_back.dto.request.TaskRequestDTO;
 import com.toDoApp.toDo_back.dto.response.TaskCretedResponseDTO;
 import com.toDoApp.toDo_back.dto.response.TaskDeletedResponseDTO;
 import com.toDoApp.toDo_back.dto.response.TaskUpdatedResponseDTO;
+import com.toDoApp.toDo_back.entity.UserEntity;
 import com.toDoApp.toDo_back.services.TaskService;
+import com.toDoApp.toDo_back.services.UserService;
 import com.toDoApp.toDo_back.utils.ApiResponse;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/v1/tasks")
@@ -28,11 +34,21 @@ public class TaskController {
     @Autowired
     TaskService taskService;
     
+    @Autowired
+    UserService userService;
+
     //endpoint para obtener tareas
     @GetMapping("")
-    public ResponseEntity<ApiResponse<?>> getTasks(@RequestParam Long id){
+    public ResponseEntity<ApiResponse<?>> getTasks(HttpServletRequest request){
+
         try{
-            List<TaskCretedResponseDTO> tasks = taskService.getTasks(id);
+
+            //obtener el usuario con la request que tiene los  headers 
+            UserEntity user = userService.getUserByRequest(request)
+            .orElseThrow();
+
+
+            List<TaskCretedResponseDTO> tasks = taskService.getTasks(user.getId());
 
             if(tasks!=null){
                 return ResponseEntity.status(HttpStatus.OK)
@@ -60,11 +76,17 @@ public class TaskController {
 
     //endpoint para crear una tarea
     @PostMapping("/create")
-    public ResponseEntity<ApiResponse<?>> createTask(@RequestParam Long id,@RequestBody TaskRequestDTO taskRequest){
+    public ResponseEntity<ApiResponse<?>> createTask(HttpServletRequest request,@RequestBody TaskRequestDTO taskRequest){
 
         try{
+
+            //obtener el usuario con la request que tiene los  headers 
+            UserEntity user = userService.getUserByRequest(request)
+            .orElseThrow();
+
+
             //crear la tarea con el servicio
-            TaskCretedResponseDTO taskCreated = taskService.createTask(id, taskRequest);
+            TaskCretedResponseDTO taskCreated = taskService.createTask(user.getId(), taskRequest);
 
             if(taskCreated != null){
                 return ResponseEntity.status(HttpStatus.CREATED)
@@ -97,7 +119,7 @@ public class TaskController {
 
         try{
             //actualizar la tarea con el servicio
-            TaskUpdatedResponseDTO task =taskService.updateTask(id, taskRequestDTO);
+            TaskUpdatedResponseDTO task = taskService.updateTask(id, taskRequestDTO);
 
             if(task!=null){
                 return(ResponseEntity.status(HttpStatus.ACCEPTED)
