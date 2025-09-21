@@ -11,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.toDoApp.toDo_back.security.filters.JwtAuthorizationFilter;
 
@@ -31,7 +33,7 @@ public class SecurityConfig {
     public JwtAuthorizationFilter jwtAuthorizationFilter;
     
     @Bean //registar un objeto en el contenedor de spring(gestionado automaticamente)
-    public SecurityFilterChain securityChain(HttpSecurity http) throws Exception{
+    SecurityFilterChain securityChain(HttpSecurity http) throws Exception{
 
         return http
             //desactivar el csrf
@@ -49,5 +51,22 @@ public class SecurityConfig {
             .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
             //.httpBasic(Customizer.withDefaults())
             .build();
+    }
+
+    //configuracion del cors para permitir el acceso desde diferentes dominios
+    @Bean
+    UrlBasedCorsConfigurationSource corsConfigurationSource(){
+
+        //configurar el cors
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        //dominio permitido para hacer las peticiones
+        configuration.addAllowedOrigin("http://localhost:4200");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+
+        source.registerCorsConfiguration("/**", configuration);
+
+        return source;
     }
 }
