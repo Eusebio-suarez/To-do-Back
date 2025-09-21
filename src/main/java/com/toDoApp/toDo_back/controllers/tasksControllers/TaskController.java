@@ -1,8 +1,6 @@
 package com.toDoApp.toDo_back.controllers.tasksControllers;
 
-import java.net.http.HttpRequest;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
