@@ -73,6 +73,7 @@ public class AuthController {
 
                 //devolver la respuesta con el token
                 return ResponseEntity.status(HttpStatus.OK)
+                    .header("Authorization","Bearer "+token)
                     .body(ApiResponse.builder()
                         .success(true)
                         .message("login exitoso")
