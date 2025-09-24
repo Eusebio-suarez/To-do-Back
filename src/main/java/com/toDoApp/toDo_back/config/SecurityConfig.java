@@ -63,6 +63,10 @@ public class SecurityConfig {
         //dominio permitido para hacer las peticiones
         configuration.addAllowedOrigin("http://localhost:4200");
 
+        //permitir todos los metodos
+        configuration.addAllowedMethod("*");
+        configuration.addAllowedHeader("*");
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         source.registerCorsConfiguration("/**", configuration);
