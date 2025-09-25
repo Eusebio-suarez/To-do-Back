@@ -1,7 +1,7 @@
 package com.toDoApp.toDo_back.utils;
 
 public enum StatusEnum {
-    PENDING,
+    TODO,
     INPROGRESS,
-    FINISHED
+    DONE
 }
