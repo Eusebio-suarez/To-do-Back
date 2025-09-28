@@ -5,13 +5,20 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-  jpa:
-    hibernate:
-      ddl-auto: update   # crea/actualiza tablas según tus entidades
-    show-sql: true        # muestra SQL en consola
-    properties:
-      hibernate:
-        format_sql: true
-  jwt:
-    secretKey: ${JWT_SECRET_KEY:56YNTKPqsn7nXIAb5qnfgSuYVK2gDQ2b}
-    expiration: ${JWT_EXPIRATION:3600000}
+    hikari:
+        maximum-pool-size: 3
+        minimum-idle: 1
+        idle-timeout: 10000
+        max-lifetime: 30000
+        connection-timeout: 20000  
+
+    jpa:
+        hibernate:
+        ddl-auto: update   # crea/actualiza tablas según tus entidades
+        show-sql: true        # muestra SQL en consola
+        properties:
+            hibernate:
+                format_sql: true
+    jwt:
+        secretKey: ${JWT_SECRET_KEY:56YNTKPqsn7nXIAb5qnfgSuYVK2gDQ2b}
+        expiration: ${JWT_EXPIRATION:3600000}
