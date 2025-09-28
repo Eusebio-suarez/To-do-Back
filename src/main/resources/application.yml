@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://host.docker.internal:3306/toDoApp}
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/toDoApp?allowPublicKeyRetrieval=true&useSSL=false}
     username: ${SPRING_DATASOURCE_USERNAME:root}
     password: ${SPRING_DATASOURCE_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,8 +12,6 @@ spring:
     properties:
       hibernate:
         format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect 
-
   jwt:
     secretKey: ${JWT_SECRET_KEY:56YNTKPqsn7nXIAb5qnfgSuYVK2gDQ2b}
     expiration: ${JWT_EXPIRATION:3600000}
