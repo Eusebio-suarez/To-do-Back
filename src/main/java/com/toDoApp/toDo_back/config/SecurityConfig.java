@@ -61,7 +61,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         //dominio permitido para hacer las peticiones
-        configuration.addAllowedOrigin("http://localhost:4200");
+        configuration.addAllowedOrigin("https://to-do-app-eight-theta-42.vercel.app");
 
         //permitir todos los metodos
         configuration.addAllowedMethod("*");

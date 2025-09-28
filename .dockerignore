@@ -1,0 +1,11 @@
+#carpeta d ecompilacion de maven
+target/
+
+#configuracion de maven
+.mvn/
+*.iml
+
+#git
+.git/
+.gitattributes
+.gitignore
