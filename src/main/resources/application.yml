@@ -1,18 +1,18 @@
 spring:
-    datasource:
-        url: jdbc:mysql://localhost:3306/toDoApp
-        username: root
-        password: rootPass
-        driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://host.docker.internal:3306/toDoApp}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-    jpa:
-        hibernate:
-            ddl-auto: create  # crea/actualiza tablas según tus entidades
-        show-sql: true       # muestra SQL en consola
-        properties:
-            hibernate:
-                format_sql: true
+  jpa:
+    hibernate:
+      ddl-auto: update   # crea/actualiza tablas según tus entidades
+    show-sql: true        # muestra SQL en consola
+    properties:
+      hibernate:
+        format_sql: true
 
-    jwt:
-        secretKey: 56YNTKPqsn7nXIAb5qnfgSuYVK2gDQ2b
-        expiration: 3600000
+  jwt:
+    secretKey: ${JWT_SECRET_KEY:56YNTKPqsn7nXIAb5qnfgSuYVK2gDQ2b}
+    expiration: ${JWT_EXPIRATION:3600000}
